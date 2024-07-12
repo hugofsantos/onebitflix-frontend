@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { Fragment } from "react";
 import HeaderNoAuth from "@/src/components/homeNoAuth/headerNoAuth";
+import PresentationSection from "@/src/components/homeNoAuth/presentationSection";
 import styles from "../styles/HomeNoAuth.module.scss";
 
 const HomeNoAuth = () => {
@@ -13,7 +14,8 @@ const HomeNoAuth = () => {
         <meta name="description" content="Tenha acesso aos melhores conteúdos de programação de uma forma simples e fácil!" />
       </Head>
       <main>
-        <HeaderNoAuth></HeaderNoAuth>
+        <HeaderNoAuth/>
+        <PresentationSection/>
       </main>
     </Fragment>
   );
