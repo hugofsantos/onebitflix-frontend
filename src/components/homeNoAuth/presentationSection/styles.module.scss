@@ -21,3 +21,31 @@
   color: $lightGray;
   margin: 20px 0px 40px 0px;
 }
+
+.btnCta {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+
+  font-weight: bold;
+  color: #ffffff;
+  background-color: transparent;
+
+  padding: 14px 30px;
+  border: 2px solid $lightRed;
+  transition: 0.5s;
+
+  .btnImg {
+    width: 11px;
+  }
+
+  &:hover {
+    border-color: $darkRed;
+    color: $lightGray;
+    background-color: transparent;
+  }
+}
+
+.arrowDown {
+  width: 30px;
+}

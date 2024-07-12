@@ -4,9 +4,9 @@ import Link from 'next/link';
 
 const PresentationSection = () => {
   return <>
-    <Container>
+    <Container className="py-4">
       <Row>
-        <Col md>
+        <Col md className="d-flex flex-column justify-content-center align-items-start">
           <p className={styles.subtitle}>ACESSO ILIMITADO</p>
           <p className={styles.title}>Tenha acesso aos melhores <br/> tutoriais de programação.</p>
           <p className={styles.description}>Estudo de onde estiver, a qualquer momento, e continue <br/> 
@@ -21,7 +21,15 @@ const PresentationSection = () => {
         </Col>
         <Col md>
           <img src="/homeNoAuth/imgPresentation.png" alt="Apresentação de conteúdos disponíveis" className={styles.imgPresentation}/>
-
+        </Col>
+      </Row>
+      <Row>
+        <Col className="d-flex justify-content-center pt-5">
+          <img
+            src="/homeNoAuth/iconArrowDown.svg"
+            alt="Seta apontando para baixo baixo"
+            className={styles.arrowDown}
+          />
         </Col>
       </Row>
     </Container>
