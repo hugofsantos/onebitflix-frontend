@@ -2,6 +2,7 @@ import Head from "next/head";
 import { Fragment } from "react";
 import HeaderNoAuth from "@/src/components/homeNoAuth/headerNoAuth";
 import PresentationSection from "@/src/components/homeNoAuth/presentationSection";
+import CardsSection from "@/src/components/homeNoAuth/cardsSection";
 import styles from "../styles/HomeNoAuth.module.scss";
 
 const HomeNoAuth = () => {
@@ -18,7 +19,9 @@ const HomeNoAuth = () => {
           <HeaderNoAuth />
           <PresentationSection />
         </div>
+        <CardsSection>
 
+        </CardsSection>
       </main>
     </Fragment>
   );
