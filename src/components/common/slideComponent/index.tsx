@@ -9,11 +9,12 @@ interface props {
 
 const SlideComponent = ({courses}: props) => {
   return <>
-    <div>
+    <div className='d-flex flex-column align-items-center py-4'>
       <Splide options={{
         type: "loop",
         perPage: 4,
         perMove: 1,
+        width: 1200,
         pagination: false
       }}>
         {

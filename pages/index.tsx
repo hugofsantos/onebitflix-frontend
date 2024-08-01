@@ -39,7 +39,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-      courses: (res as any).data
+      courses: (res as any)?.data || []
     },
     revalidate: 60 * 60 * 24 // Um dia (24h) em segundos
   }
