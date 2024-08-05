@@ -8,7 +8,7 @@ interface props {
 };
 
 const SlideComponent = ({courses}: props) => {
-  const slideCount = courses.length > 4 ? 4 : courses.length;
+  const slideCount = courses.length >= 4 ? 4 : courses.length;
 
   return <>
     <div className='d-flex flex-column align-items-center py-4'>
