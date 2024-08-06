@@ -3,14 +3,54 @@ import HeaderGeneric from '@/src/components/common/headerGeneric';
 import styles from '@/styles/registerLogin.module.scss';
 import Head from 'next/head';
 import { Container ,Form, FormGroup, Input, Label, Button } from 'reactstrap';
-
+import { FormEvent, useState } from 'react';
+import authService from '@/src/services/authService';
+import { useRouter } from 'next/router';
+import ToastComponent from '@/src/components/common/toast';
 
 const Register = () => {
+  const [toastIsOpen, setToastIsOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+
   const today = new Date();
   const year = today.getFullYear();
   const month = String(today.getMonth() + 1).padStart(2, '0'); //getMonth() retorna valores de 0 a 11, por isso o +1
   const day = String(today.getDate()).padStart(2, '0');
   const maxDate = `${year}-${month}-${day}`; 
+
+  const router = useRouter();
+  const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    
+    const firstName = formData.get("firstName")!.toString().toUpperCase();
+    const lastName = formData.get("lastName")!.toString().toUpperCase();
+    const phone = formData.get("phone")!.toString();
+    const birth = formData.get("birth")!.toString();
+    const email = formData.get("email")!.toString();
+    const password = formData.get("password")!.toString();
+    const confirmedPassowrd = formData.get("confirmedPassword")!.toString();
+    
+    const params = {firstName, lastName, phone, birth, email, password};
+
+    if(password != confirmedPassowrd) {
+      setToastIsOpen(true);
+      setToastMessage("A senha e confirmação são diferentes!");
+      setTimeout(() => setToastIsOpen(false), 1000 * 3);
+      return;
+    }
+
+    const {status, data} = await authService.register(params);
+
+    if(status === 201) router.push("/login?registred=true");
+    else {
+      setToastIsOpen(true);
+      setToastMessage(data.message);
+      setTimeout(() => setToastIsOpen(false), 1000 * 3);
+    }
+    
+  };
 
   return <>
     <Head>
@@ -24,7 +64,7 @@ const Register = () => {
     <main className={styles.main}>
       <Container className="py-5">
         <p className={styles.greetings}><strong>Bem-vindo (a) ao OneBitFlix!</strong></p>
-        <Form className={styles.form}>
+        <Form className={styles.form} onSubmit={handleRegister}>
           <p className='text-center'><strong>Faça a sua conta!</strong></p>
           <FormGroup>
             <Label for="firstName" className={styles.label}>NOME</Label>
@@ -120,6 +160,7 @@ const Register = () => {
 
           <Button type="submit" outline className={styles.formBtn}>CADASTRAR</Button>      
         </Form>
+        <ToastComponent color="bg-danger" isOpen={toastIsOpen} message={toastMessage}/>
       </Container>
     </main>
 
