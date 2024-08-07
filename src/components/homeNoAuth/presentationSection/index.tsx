@@ -12,7 +12,7 @@ const PresentationSection = () => {
           <p className={styles.description}>Estudo de onde estiver, a qualquer momento, e continue <br/> 
           evoluindo como programador.</p>
           
-          <Link href="/register">
+          <Link href="/register" className={styles.link}>
             <Button className={styles.btnCta}>
               ACESSE AGORA
               <img src="/buttonPlay.svg" alt="Acessar conteúdo" className={styles.btnImg} />
