@@ -26,6 +26,22 @@ const courseService = {
     } catch (error) {
       error instanceof Error && console.error(error.message);
     }
+  },
+
+  async getFeaturedCourses() {
+    try {
+      const token = sessionStorage.getItem("onebitflix-token");
+
+      return await api.get("/courses/featured", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+    } catch(error: any) {
+      console.error(error.response?.data?.message);
+
+      return error.response;
+    }
   }
 };
 
