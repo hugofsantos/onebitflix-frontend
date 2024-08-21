@@ -38,10 +38,43 @@ const courseService = {
         }
       });
     } catch(error: any) {
-      console.error(error.response?.data?.message);
-
       return error.response;
     }
+  },
+
+  async addToFav(courseId: number | string) {
+    try {
+      const token = sessionStorage.getItem("onebitflix-token");
+
+      return await api.post("/favorites", {courseId}, {
+        headers: {'Authorization': `Bearer ${token}`}
+      });
+    } catch (error: any) {
+      return error.response;
+    }
+  },
+
+  async removeFav(courseId: number | string) {
+    try {
+      const token = sessionStorage.getItem("onebitflix-token");
+
+      return await api.delete("/favorites", {
+        headers: { 'Authorization': `Bearer ${token}` },
+        data: {courseId}
+      });
+    } catch (error: any) {
+      return error.response;
+    }
+  },
+
+  async getFavCourses() {
+    try {
+      const token = sessionStorage.getItem("onebitflix-token");
+
+      return await api.get('/favorites', {headers: {'Authorization': `Bearer ${token}`}});
+    } catch (error: any) {
+      return error.response;
+    }    
   }
 };
 
