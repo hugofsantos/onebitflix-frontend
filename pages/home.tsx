@@ -2,6 +2,7 @@ import styles from '@/styles/home.module.scss';
 import HeaderAuth from "@/src/components/common/headerAuth";
 import Head from "next/head";
 import FeaturedSection from '@/src/components/homeAuth/featuredSection';
+import NewestCategory from '@/src/components/homeAuth/newestCategory';
 
 const HomeAuth = () => {
   return <>
@@ -14,6 +15,7 @@ const HomeAuth = () => {
     </header>
     <main>
       <FeaturedSection></FeaturedSection>
+      <NewestCategory></NewestCategory>
     </main>
   </>
 };
