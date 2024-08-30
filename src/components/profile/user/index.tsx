@@ -76,7 +76,7 @@ const UserForm = () => {
       </div>
       <hr/>
 
-      <div className={styles.fullNameDiv}>
+      <div className={styles.inputFlexDiv}>
         <FormGroup>
           <Label for='firstName' className={styles.label}>NOME</Label>
           <Input
@@ -87,7 +87,7 @@ const UserForm = () => {
             required
             maxLength={20}
             value={firstName}
-            className={styles.fullNameInput}
+            className={styles.inputFlex}
             onChange={(event) => setFirstName(event.target.value.toString().toUpperCase())}
           />
         </FormGroup>
@@ -102,13 +102,13 @@ const UserForm = () => {
             required
             maxLength={20}
             value={lastName}
-            className={styles.fullNameInput}
+            className={styles.inputFlex}
             onChange={(event) => setLastName(event.target.value.toString().toUpperCase())}
           />
         </FormGroup>
       </div>
 
-      <div className={styles.phoneAndEmailDiv}>
+      <div className={styles.inputNormalDiv}>
         <FormGroup>
           <Label for='phone' className={styles.label}>WHATSAPP / TELEGRAM</Label>
           <Input
