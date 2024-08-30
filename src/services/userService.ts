@@ -7,6 +7,11 @@ interface UpdateUserParams {
   email: string,
 }
 
+interface updatePasswordParams {
+  currentPassword: string,
+  newPassword: string
+}
+
 const profileService = {
   async fetchCurrentProfile() {
     try {
@@ -31,6 +36,21 @@ const profileService = {
         return error.response;
 
       return error;
+    }
+  },
+
+  async updatePassword(params: updatePasswordParams) {
+    try {
+      const token = sessionStorage.getItem("onebitflix-token");
+
+      return (await api.put("/users/current/password", params, {
+        headers: {'Authorization': `Bearer ${token}`}
+      })).status;
+    } catch (error: any) {
+      if ([400, 401].includes(error.response?.status))
+        return error.response;
+
+      return error;      
     }
   }
 };

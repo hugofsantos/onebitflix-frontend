@@ -64,7 +64,7 @@ const UserForm = () => {
   return <>
     <Form className={styles.form} onSubmit={handleUserUpdate}>
       <div className={styles.formName}>
-        <p className={styles.nameAbbreviation}>{firstName[0] + lastName[0]}</p>
+        <p className={styles.nameAbbreviation}>{(firstName[0] ?? '') + (lastName[0] ?? '')}</p>
         <p className={styles.userName}>{firstName + ' ' + lastName}</p>
       </div>
       <div className={styles.memberTime}>
