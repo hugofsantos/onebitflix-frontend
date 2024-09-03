@@ -3,12 +3,13 @@ import useSWR from 'swr';
 import courseService, { CourseType } from '@/src/services/courseService';
 import {Container, Button} from 'reactstrap';
 import Link from 'next/link';
+import SpinnerPage from '../../common/spinner';
 
 const FeaturedSection = () => {
   const {data, error} = useSWR("/featured", courseService.getFeaturedCourses);
 
   if(error) return error;
-  if(!data) return (<><p>Loading...</p></>)
+  if(!data) return (<SpinnerPage/>)
 
   return (<>
     {data.data?.map((course:CourseType) => (
