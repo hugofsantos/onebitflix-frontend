@@ -119,6 +119,7 @@ const UserForm = () => {
             required
             value={phone}
             className={styles.input}
+            data-mask='[-]+55 (00) 00000-0000'
             onChange={(event) => setPhone(event.target.value)}
           />
         </FormGroup>

@@ -14,6 +14,7 @@ const Profile = () => {
     <Head>
       <title>OneBitFlix - Perfil</title>
       <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon" />
+      <script src="https://jsuites.net/v4/jsuites.js"></script>
     </Head>  
     <header className={styles.header}>
       <HeaderAuth/>
