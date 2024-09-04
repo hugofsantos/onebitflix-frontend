@@ -75,6 +75,16 @@ const courseService = {
     } catch (error: any) {
       return error.response;
     }    
+  },
+
+  async searchCourses(name: string) {
+    try {
+      const token = sessionStorage.getItem("onebitflix-token");
+
+      return await api.get(`/courses/search?name=${name}`, { headers: { 'Authorization': `Bearer ${token}` } });
+    } catch (error: any) {
+      return error.response;
+    }       
   }
 };
 
