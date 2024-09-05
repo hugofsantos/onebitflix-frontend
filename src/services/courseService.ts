@@ -58,9 +58,8 @@ const courseService = {
     try {
       const token = sessionStorage.getItem("onebitflix-token");
 
-      return await api.delete("/favorites", {
+      return await api.delete(`/favorites/${courseId}`, {
         headers: { 'Authorization': `Bearer ${token}` },
-        data: {courseId}
       });
     } catch (error: any) {
       return error.response;
@@ -77,6 +76,30 @@ const courseService = {
     }    
   },
 
+  async likeCourse(courseId: number | string) {
+    try {
+      const token = sessionStorage.getItem("onebitflix-token");
+
+      return await api.post("/likes", { courseId }, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+    } catch (error: any) {
+      return error.response;
+    }
+  },  
+
+  async removeLikeFromCourse(courseId: number | string) {
+    try {
+      const token = sessionStorage.getItem("onebitflix-token");
+
+      return await api.delete(`/likes/${courseId}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+    } catch (error: any) {
+      return error.response;
+    }
+  },
+
   async searchCourses(name: string) {
     try {
       const token = sessionStorage.getItem("onebitflix-token");
@@ -85,7 +108,17 @@ const courseService = {
     } catch (error: any) {
       return error.response;
     }       
-  }
+  },
+
+  async getEpisodesByCourseId(courseId: number | string) {
+    try {
+      const token = sessionStorage.getItem("onebitflix-token");
+
+      return await api.get(`/courses/${courseId}`, { headers: { 'Authorization': `Bearer ${token}` } });
+    } catch (error: any) {
+      return error.response;
+    }
+  }  
 };
 
 export default courseService;
