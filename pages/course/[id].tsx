@@ -19,7 +19,7 @@ const CoursePage = () => {
   const getCourse = async () => {
     if(typeof id !== 'string') return;
 
-    const res = await courseService.getEpisodesByCourseId(id);
+    const res = await courseService.getCourseWithEpisodes(id);
 
     if(res.status === 200) {
       setCourse(res.data);
@@ -99,7 +99,7 @@ const CoursePage = () => {
         {!course?.episodes?.length 
           ? (<p className={styles.noEpisodesText}> Não há episódios neste curso ainda &#128533;. Por favor, volte outra hora!</p>)
           : course.episodes?.map((episode: EpisodeType) => (
-              <EpisodeCard key={episode.id} episode={episode} />
+              <EpisodeCard key={episode.id} episode={episode} courseId={course.id}/>
             ))
         }
       </Container>

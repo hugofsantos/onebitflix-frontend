@@ -110,7 +110,7 @@ const courseService = {
     }       
   },
 
-  async getEpisodesByCourseId(courseId: number | string) {
+  async getCourseWithEpisodes(courseId: number | string) {
     try {
       const token = sessionStorage.getItem("onebitflix-token");
 
