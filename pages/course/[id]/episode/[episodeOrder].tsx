@@ -14,11 +14,17 @@ const EpisodePage = () => {
   const router = useRouter();
   const id = router.query.id?.toString() || "";
   const episodeOrder = Number(router.query.episodeOrder?.toString() || "0");
+  const [loading, setLoading] = useState(true);
   const [course, setCourse] = useState<CourseType>();
   const [getEpisodeTime,setGetEpisodeTime] = useState(0);
   const [episodeTime, setEpisodeTime] = useState(0);
   const [playerIsReady, setPlayerIsReady] = useState(false);
   const playerRef = useRef<ReactPlayer>(null);
+
+  useEffect(() => {
+    if (!sessionStorage.getItem("onebitflix-token")) router.push("/login");
+    else setLoading(false);
+  }, []);  
  
   const handleGetEpisodeTime = async () => {
     const episodeId = course?.episodes?.[episodeOrder].id;
@@ -69,8 +75,7 @@ const EpisodePage = () => {
 
   useEffect(() => {getCourse()}, [id]);
 
-
-  if (!course) return <SpinnerPage />
+  if (!course || loading) return <SpinnerPage />
 
   return <>
       <Head>

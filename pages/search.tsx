@@ -1,5 +1,6 @@
 import Footer from '@/src/components/common/footer';
 import HeaderAuth from '@/src/components/common/headerAuth';
+import SpinnerPage from '@/src/components/common/spinner';
 import SearchCard from '@/src/components/search/searchCard';
 import courseService, { CourseType } from '@/src/services/courseService';
 import styles from '@/styles/search.module.scss';
@@ -12,6 +13,7 @@ const Search = () => {
   const router = useRouter();
   const searchName = router.query.name;
   const [searchResult, setSearchResult] = useState<CourseType[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const searchCourses = async () => {
     if(typeof searchName === 'string') {
@@ -21,7 +23,15 @@ const Search = () => {
     }
   }
 
-  useEffect(() => {searchCourses()}, [searchName]);
+  useEffect(() => {
+    if (!sessionStorage.getItem("onebitflix-token")) router.push("/login");
+    else setLoading(false);
+  }, []);
+
+  useEffect(() => { searchCourses() }, [searchName]);
+
+
+  if (loading) return <SpinnerPage />
 
   return <>
     <Head>
