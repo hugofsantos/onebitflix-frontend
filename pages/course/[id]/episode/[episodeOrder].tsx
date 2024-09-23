@@ -2,18 +2,58 @@ import Footer from '@/src/components/common/footer';
 import HeaderGeneric from '@/src/components/common/headerGeneric';
 import SpinnerPage from '@/src/components/common/spinner';
 import courseService, { CourseType } from '@/src/services/courseService';
+import episodeService from '@/src/services/episodeService';
 import styles from '@/styles/episode.module.scss';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
-import {Container, Button} from 'reactstrap';
+import {Container, Button, Progress} from 'reactstrap';
 
 const EpisodePage = () => {
   const router = useRouter();
   const id = router.query.id?.toString() || "";
   const episodeOrder = Number(router.query.episodeOrder?.toString() || "0");
   const [course, setCourse] = useState<CourseType>();
+  const [getEpisodeTime,setGetEpisodeTime] = useState(0);
+  const [episodeTime, setEpisodeTime] = useState(0);
+  const [playerIsReady, setPlayerIsReady] = useState(false);
+  const playerRef = useRef<ReactPlayer>(null);
+ 
+  const handleGetEpisodeTime = async () => {
+    const episodeId = course?.episodes?.[episodeOrder].id;
+
+    if (typeof episodeId === 'number') {
+      const res = await episodeService.getWatchTime(episodeId);
+
+      if (res.data !== null) setGetEpisodeTime(res.data.seconds);
+    }
+  };
+  const handleSetEpisodeTime = async () => {
+    const episodeId = course?.episodes?.[episodeOrder].id;
+
+    if (typeof episodeId === 'number') {
+      await episodeService.setWatchTime({
+        episodeId,
+        seconds: Math.round(episodeTime)
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (course) {
+      handleGetEpisodeTime();
+    }
+  }, [router, course])
+
+  const handleStartPlayer = () => {
+    playerRef.current?.seekTo(getEpisodeTime);
+    setPlayerIsReady(true);
+  };
+
+  if(playerIsReady) {
+    setTimeout(() => {handleSetEpisodeTime();}, 5 * 1000);
+  }
 
   const getCourse = async () => {
     if(typeof id !== 'string') return;
@@ -27,10 +67,10 @@ const EpisodePage = () => {
   const handlePrevEpisode = () => router.push(`/course/${id}/episode/${episodeOrder - 1}`);
   const handleNextEpisode = () => router.push(`/course/${id}/episode/${episodeOrder + 1}`);
 
-
   useEffect(() => {getCourse()}, [id]);
-  
-  if(!course) return <SpinnerPage/>
+
+
+  if (!course) return <SpinnerPage />
 
   return <>
       <Head>
@@ -53,6 +93,9 @@ const EpisodePage = () => {
                 className={styles.player} 
                 url={`${process.env.NEXT_PUBLIC_BASEURL}/episodes/stream?videoUrl=${course.episodes?.[episodeOrder].videoUrl}&token=${sessionStorage.getItem('onebitflix-token')}`} 
                 controls
+                ref={playerRef}
+                onStart={handleStartPlayer}
+                onProgress={(progress) => {setEpisodeTime(progress.playedSeconds)}}
               />
           }
           <div className={styles.episodePrevNext}>
